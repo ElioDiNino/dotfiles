@@ -17,7 +17,7 @@ Dotfiles for my personal, work, and server machines, managed by
 ### Running the Bootstrap Script
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply ElioDiNino
+sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply --use-builtin-git=true ElioDiNino
 ```
 
 ### Post-Installation
