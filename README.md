@@ -39,7 +39,7 @@ A few things cannot be automated and are needed for a fully working machine.
     ```sh
     keeper login
     keeper this-device persistent-login on
-    keeper this-device timeout 30d
+    keeper this-device register
     ```
 
     Until this is done, the signing key files are skipped rather than failing
