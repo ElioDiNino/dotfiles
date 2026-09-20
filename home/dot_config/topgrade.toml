@@ -1,0 +1,3 @@
+[misc]
+first = ["chezmoi"]
+disable = ["oh_my_zsh"]

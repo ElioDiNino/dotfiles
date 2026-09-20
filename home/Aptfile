@@ -1,0 +1,11 @@
+#####################################################
+# Linux packages
+#
+# One package per line. Blank lines and everything
+# after a `#` are ignored.
+#####################################################
+
+curl
+git
+tmux
+zsh

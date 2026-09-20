@@ -1,0 +1,97 @@
+cask_args appdir: '/Applications', require_sha: true
+
+#####################################################
+# Common tools for all macOS devices
+#####################################################
+
+# Binaries
+brew "chezmoi"
+brew "chroma"
+brew "coreutils"
+brew "dockutil"
+brew "curl"
+brew "fnm"
+brew "gh"
+brew "git"
+brew "git-lfs"
+brew "gnupg"
+brew "grep"
+brew "jq"
+brew "make"
+brew "mas"
+brew "pinentry-mac"
+brew "ripgrep"
+brew "tmux"
+brew "topgrade"
+brew "uv"
+brew "wget"
+brew "zsh"
+
+# Apps
+cask "beeper"
+cask "blip"
+cask "claude-code"
+cask "firefox"
+cask "gitbutler"
+cask "google-chrome", args: { require_sha: false }
+cask "iterm2"
+cask "keyboardcleantool"
+cask "logi-options+", args: { require_sha: false }
+cask "maccy"
+cask "monitorcontrol"
+cask "obs"
+cask "slack"
+cask "raycast"
+cask "rectangle"
+cask "spotify", args: { require_sha: false }
+cask "tailscale-app"
+cask "ticktick"
+cask "visual-studio-code"
+cask "whatcable"
+
+# UV tools
+uv "pre-commit"
+uv "ruff"
+
+#####################################################
+# Personal device profile
+#####################################################
+
+if ENV["HOMEBREW_DEVICE_PROFILE"] == "personal"
+
+  # Apps
+  cask "affinity"
+  cask "balenaetcher"
+  cask "discord"
+  cask "docker-desktop"
+  cask "keeper-password-manager", args: { require_sha: false }
+  brew "keeper-commander"
+  cask "nextcloud"
+  cask "privadovpn", args: { require_sha: false }
+  cask "protonvpn"
+  cask "rustdesk"
+  cask "termius", args: { require_sha: false }
+  cask "windscribe"
+  cask "wireshark-app"
+  cask "yubico-authenticator"
+  cask "zoom"
+
+  # Mac App Store apps
+  mas "Amphetamine", id: 937984704
+  mas "hide.me", id: 953040671
+
+end
+
+#####################################################
+# Work device profile
+#####################################################
+
+if ENV["HOMEBREW_DEVICE_PROFILE"] == "work"
+
+  # Apps
+  cask "1password"
+  cask "1password-cli"
+  cask "linear"
+  cask "notion"
+
+end

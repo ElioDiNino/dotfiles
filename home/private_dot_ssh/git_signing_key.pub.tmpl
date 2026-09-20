@@ -1,0 +1,13 @@
+{{- $ref := dig "signingKeyRef" "" . -}}
+{{- if $ref -}}
+{{- if eq (dig "profile" "server" .) "work" -}}
+{{- if lookPath "op" -}}
+{{- $p := splitList " " (onepasswordRead $ref | trim) }}{{ index $p 0 }} {{ index $p 1 }}
+{{ end -}}
+{{- else -}}
+{{- if lookPath "keeper" -}}
+{{- range (keeper $ref).fields }}{{ if eq .type "keyPair" }}{{ $p := splitList " " ((index .value 0).publicKey | trim) }}{{ index $p 0 }} {{ index $p 1 }}
+{{ end }}{{ end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}

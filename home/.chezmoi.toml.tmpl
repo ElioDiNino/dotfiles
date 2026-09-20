@@ -1,0 +1,22 @@
+{{- $profile := promptChoiceOnce . "profile" "Device profile" (list "personal" "work" "server") "server" -}}
+{{- $gitName := promptStringOnce . "gitName" "Git committer name" "Elio Di Nino" -}}
+
+{{- $gitEmail := "" -}}
+{{- if eq $profile "work" -}}
+{{-   $gitEmail = promptStringOnce . "gitEmail" "Git committer email" "" -}}
+{{- else -}}
+{{-   $gitEmail = promptStringOnce . "gitEmail" "Git committer email" "52972357+ElioDiNino@users.noreply.github.com" -}}
+{{- end -}}
+
+{{- $signingKeyRef := "" -}}
+{{- if eq $profile "personal" -}}
+{{-   $signingKeyRef = promptStringOnce . "signingKeyRef" "Keeper record UID for the SSH signing key (blank to skip)" "" -}}
+{{- else if eq $profile "work" -}}
+{{-   $signingKeyRef = promptStringOnce . "signingKeyRef" "1Password reference for the SSH signing key, e.g. op://Private/SSH Key/public key (blank to skip)" "" -}}
+{{- end -}}
+
+[data]
+    profile = {{ $profile | quote }}
+    gitName = {{ $gitName | quote }}
+    gitEmail = {{ $gitEmail | quote }}
+    signingKeyRef = {{ $signingKeyRef | quote }}

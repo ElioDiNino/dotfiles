@@ -1,0 +1,87 @@
+{{- $profile := dig "profile" "server" . -}}
+{{- $gitName := dig "gitName" "Elio Di Nino" . -}}
+{{- $gitEmail := dig "gitEmail" "" . -}}
+{{- $signing := dig "signingKeyRef" "" . -}}
+[user]
+	name = {{ $gitName }}
+{{- if $gitEmail }}
+	email = {{ $gitEmail }}
+{{- end }}
+{{- if $signing }}
+	signingkey = ~/.ssh/git_signing_key.pub
+{{- end }}
+
+[gpg]
+	format = ssh
+{{- if $signing }}
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+{{- end }}
+
+[commit]
+{{- if $signing }}
+	gpgsign = true
+{{- end }}
+	verbose = true
+
+[core]
+	autocrlf = input
+	excludesfile = ~/.gitignore
+
+[gitbutler]
+{{- if $signing }}
+	signCommits = true
+{{- end }}
+	aiModelProvider = openai
+
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+
+[https]
+	postBuffer = 524288000
+
+[column]
+	ui = auto
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = version:refname
+
+[init]
+	defaultBranch = main
+
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+
+[push]
+	autoSetupRemote = true
+	followTags = true
+
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+
+[help]
+	autocorrect = prompt
+
+[rerere]
+	enabled = true
+	autoupdate = true
+
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+
+[pull]
+	rebase = true

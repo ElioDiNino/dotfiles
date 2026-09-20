@@ -1,0 +1,62 @@
+{{- $profile := dig "profile" "server" . -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+info() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33m==>\033[0m %s\n' "$*" >&2; }
+die() { printf '\033[1;31m==>\033[0m %s\n' "$*" >&2; exit 1; }
+
+command -v dockutil >/dev/null 2>&1 \
+  || die "dockutil is not installed; it is declared in the Brewfile, so run 'brew bundle' first"
+
+apps=(
+{{- if eq $profile "work" }}
+  "/System/Applications/Launchpad.app"
+  "/Applications/Google Chrome.app"
+  "/Applications/Beeper Desktop.app"
+  "/Applications/Slack.app"
+  "/Applications/Linear.app"
+  "/Applications/Notion.app"
+  "/Applications/TickTick.app"
+  "/Applications/GitButler.app"
+  "/Applications/Visual Studio Code.app"
+  "/Applications/iTerm.app"
+  "/Applications/1Password.app"
+  "/Applications/Spotify.app"
+  "/System/Applications/System Settings.app"
+{{- else }}
+  "/System/Applications/Launchpad.app"
+  "/Applications/Google Chrome.app"
+  "/Applications/TickTick.app"
+  "/Applications/Discord.app"
+  "/Applications/Beeper Desktop.app"
+  "/Applications/Slack.app"
+  "/Applications/GitButler.app"
+  "/Applications/Visual Studio Code.app"
+  "/Applications/iTerm.app"
+  "/Applications/Spotify.app"
+  "/Applications/RustDesk.app"
+  "/System/Applications/System Settings.app"
+{{- end }}
+)
+
+info "Rebuilding the Dock..."
+
+# Start from empty so the result does not depend on what was there before.
+dockutil --no-restart --remove all >/dev/null
+
+for app in "${apps[@]}"; do
+  if [ -d "$app" ]; then
+    dockutil --no-restart --add "$app" >/dev/null
+  else
+    warn "Not installed, skipping: $(basename "$app" .app)"
+  fi
+done
+
+# Downloads stack: sorted by date added, shown as a stack in fan view.
+dockutil --no-restart --add "$HOME/Downloads" \
+  --view fan --display stack --sort dateadded >/dev/null
+
+killall Dock
+
+info "Dock configured with ${#apps[@]} apps"

@@ -1,0 +1,44 @@
+{{- if eq (dig "profile" "server" .) "personal" -}}
+#!/usr/bin/env bash
+#
+# One-shot helper that generates the activation QR code for self-hosting
+# OpenBubbles. See https://openbubbles.app/quickstart.html#with-a-mac
+set -euo pipefail
+
+info() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33m==>\033[0m %s\n' "$*" >&2; }
+
+app="/Applications/Mac Hardware Info.app"
+url="https://github.com/OpenBubbles/Mac-Hardware-Info/releases/latest/download/Mac.Hardware.Info.zip"
+
+if [ -d "$app" ]; then
+  info "Mac Hardware Info already installed"
+  exit 0
+fi
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+info "Installing OpenBubbles Mac Hardware Info..."
+
+# Optional extra: warn and continue rather than aborting the whole apply.
+if ! curl -fsSL --retry 3 -o "$tmp/mhi.zip" "$url"; then
+  warn "Could not download Mac Hardware Info; install it manually from"
+  warn "  https://openbubbles.app/quickstart.html#with-a-mac"
+  exit 0
+fi
+
+if ! unzip -q "$tmp/mhi.zip" -d "$tmp"; then
+  warn "Could not unpack Mac Hardware Info; skipping"
+  exit 0
+fi
+
+if [ ! -d "$tmp/Mac Hardware Info.app" ]; then
+  warn "Unexpected archive layout; install Mac Hardware Info manually"
+  exit 0
+fi
+
+mv "$tmp/Mac Hardware Info.app" "$app"
+info "Installed $app"
+info "Run it to generate the activation code for your OpenBubbles server."
+{{- end -}}

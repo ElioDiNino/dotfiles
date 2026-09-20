@@ -1,0 +1,12 @@
+{{- $profile := dig "profile" "server" . -}}
+{{ if eq $profile "personal" -}}
+# ODROID
+Host odroid
+  User odroid
+  ForwardAgent yes
+
+# Proxmox & Docker
+Host pve docker
+  User root
+  ForwardAgent yes
+{{- end }}

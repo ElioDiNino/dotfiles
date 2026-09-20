@@ -1,0 +1,14 @@
+{{- $ref := dig "signingKeyRef" "" . -}}
+{{- $email := dig "gitEmail" "" . -}}
+{{- if and $ref $email -}}
+{{- if eq (dig "profile" "server" .) "work" -}}
+{{- if lookPath "op" -}}
+{{- $p := splitList " " (onepasswordRead $ref | trim) }}{{ $email }} namespaces="git" {{ index $p 0 }} {{ index $p 1 }}
+{{ end -}}
+{{- else -}}
+{{- if lookPath "keeper" -}}
+{{- range (keeper $ref).fields }}{{ if eq .type "keyPair" }}{{ $p := splitList " " ((index .value 0).publicKey | trim) }}{{ $email }} namespaces="git" {{ index $p 0 }} {{ index $p 1 }}
+{{ end }}{{ end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
