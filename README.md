@@ -39,6 +39,7 @@ A few things cannot be automated and are needed for a fully working machine.
     ```sh
     keeper login
     keeper this-device persistent-login on
+    keeper biometric register  # optionally enable Touch ID
     keeper this-device register
     ```
 
