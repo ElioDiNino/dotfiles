@@ -18,7 +18,7 @@ defaults write -g InitialKeyRepeat -int 15
 # Dock
 #####################################################
 
-defaults write com.apple.dock show-recents -bool false
+defaults write com.apple.dock show-recents -bool true
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock mru-spaces -bool false
 defaults write com.apple.dock tilesize -int 62
