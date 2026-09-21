@@ -63,6 +63,10 @@ if ENV["HOMEBREW_DEVICE_PROFILE"] == "personal"
   cask "affinity"
   cask "balenaetcher"
   cask "discord"
+  tap "betterdiscord/tap", trusted: {
+    cask: "bdcli",
+  }
+  cask "bdcli"
   cask "docker-desktop"
   cask "keeper-password-manager", args: { require_sha: false }
   brew "keeper-commander"
