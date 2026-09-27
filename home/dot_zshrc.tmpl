@@ -95,12 +95,16 @@ if (( $+commands[fnm] )); then
   eval "$(fnm env --use-on-cd)"
 fi
 
-if (( $+commands[direnv] )); then
-  eval "$(direnv hook zsh)"
-fi
-
 {{ if eq $profile "personal" }}
 export SSH_AUTH_SOCK="${TMPDIR%/}/keeper-ssh-agent.sock"
 {{ else if eq $profile "work" -}}
 export SSH_AUTH_SOCK="~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock"
 {{ end }}
+
+{{- if eq $profile "work" }}
+[[ -d "$HOME/.local/share/sentry-devenv/bin" ]] && export PATH="$HOME/.local/share/sentry-devenv/bin:$PATH"
+{{- end }}
+
+if (( $+commands[direnv] )); then
+  eval "$(direnv hook zsh)"
+fi
