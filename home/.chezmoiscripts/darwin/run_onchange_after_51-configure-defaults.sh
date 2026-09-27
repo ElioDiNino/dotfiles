@@ -51,9 +51,6 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 # General
 #####################################################
 
-# Make TextEdit use plain text mode by default.
-defaults write com.apple.TextEdit RichText -bool false
-
 # Disable window background tinting based on the wallpaper.
 defaults write -g AppleReduceDesktopTinting -bool true
 
@@ -64,8 +61,8 @@ defaults write -g NSGlassTintAmount -int 1
 # Apply
 #####################################################
 
-for app in Finder Dock TextEdit; do
+for app in Finder Dock; do
   killall "$app" 2>/dev/null || true
 done
 
-info "macOS defaults applied (Finder, Dock, TextEdit restarted)"
+info "macOS defaults applied (Finder and Dock restarted)"
