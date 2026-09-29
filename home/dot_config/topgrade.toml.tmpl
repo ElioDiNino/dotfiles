@@ -1,0 +1,9 @@
+[misc]
+first = ["chezmoi"]
+disable = ["shell"]
+{{ if ne .chezmoi.os "darwin" }}
+# No apt package for chezmoi, so the bootstrap script's ~/.local/bin binary
+# self-upgrades. On macOS Homebrew owns it and `chezmoi upgrade` refuses.
+[commands]
+"chezmoi upgrade" = "chezmoi upgrade"
+{{ end -}}
