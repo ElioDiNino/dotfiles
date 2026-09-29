@@ -5,7 +5,6 @@ cask_args appdir: '/Applications', require_sha: true
 #####################################################
 
 # Binaries
-brew "chezmoi"
 brew "chroma"
 brew "coreutils"
 brew "dockutil"
