@@ -5,6 +5,7 @@
 # after a `#` are ignored.
 #####################################################
 
+chezmoi
 curl
 git
 tmux
