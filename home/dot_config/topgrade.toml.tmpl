@@ -1,7 +1,7 @@
 [misc]
 first = ["chezmoi"]
 {{ if eq .chezmoi.os "darwin" -}}
-disable = ["shell", "containers"]
+disable = ["shell", "containers", "pnpm"]
 {{ else -}}
 disable = ["shell", "containers", "distrobox", "toolbx"]
 {{ end -}}
